@@ -1,0 +1,2297 @@
+/* ============================================
+   ENHANCED SPLIT ATMOSPHERE - DUAL THEME STYLES
+   British MOD (Classic Rock) | CS2 (Gaming)
+   ============================================ */
+
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ============================================
+   CSS VARIABLES - ENHANCED DUAL THEME
+   ============================================ */
+:root {
+    /* ========== BRITISH MOD COLORS (Rock) ========== */
+    --mod-red: #E63946;
+    --mod-red-dark: #C62828;
+    --mod-blue: #1D3557;
+    --mod-navy: #0D1B2A;
+    --mod-cream: #F1FAEE;
+    --mod-white: #FFFFFF;
+    --mod-black: #0A0A0A;
+    --mod-gold: #FFB703;
+    --mod-orange: #FB8500;
+    --mod-teal: #2A9D8F;
+    --mod-grey: #8D99AE;
+    
+    /* ========== CS2 COLORS (Gaming) ========== */
+    --cs-bg-primary: #0a0a0a;
+    --cs-bg-secondary: #111111;
+    --cs-bg-tertiary: #1a1a1a;
+    --cs-bg-card: #141414;
+    --cs-bg-hover: #1f1f1f;
+    --cs-text-primary: #e5e5e5;
+    --cs-text-secondary: #999999;
+    --cs-text-muted: #666666;
+    --cs-accent: #de9b35;
+    --cs-accent-secondary: #f5b942;
+    --cs-accent-glow: rgba(222, 155, 53, 0.3);
+    --cs-accent-dark: #a67620;
+    --cs-border: #2a2a2a;
+    --cs-border-accent: #3a3a3a;
+    
+    /* ========== FONTS ========== */
+    --font-display: 'Oswald', sans-serif;
+    --font-body: 'Playfair Display', Georgia, serif;
+    --font-mono: 'Space Mono', monospace;
+    --font-heading: 'Bebas Neue', 'Impact', sans-serif;
+    --font-main: 'Inter', 'Segoe UI', 'Roboto', -apple-system, sans-serif;
+    
+    /* ========== SPACING ========== */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    --space-xxl: 5rem;
+    
+    /* ========== TRANSITIONS ========== */
+    --transition-fast: all 0.15s ease;
+    --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-normal: all 0.25s ease;
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* ========== SHADOWS ========== */
+    --shadow-mod: 8px 8px 0 var(--mod-red);
+    --shadow-cs-sm: 0 2px 4px rgba(0, 0, 0, 0.5);
+    --shadow-cs-md: 0 4px 12px rgba(0, 0, 0, 0.6);
+    --shadow-cs-lg: 0 8px 24px rgba(0, 0, 0, 0.7);
+    --shadow-cs-glow: 0 0 20px var(--cs-accent-glow);
+    --shadow-elevation-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    --shadow-elevation-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    --shadow-elevation-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    
+    /* ========== BORDER RADIUS ========== */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+}
+
+/* ============================================
+   RESET & BASE STYLES
+   ============================================ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-main);
+    line-height: 1.8;
+    font-size: 1.05rem;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: linear-gradient(90deg, 
+        var(--mod-navy) 0%, 
+        var(--mod-navy) 50%, 
+        var(--cs-bg-primary) 50%, 
+        var(--cs-bg-primary) 100%
+    );
+    cursor: none;
+}
+
+/* Body with preloader active */
+body.loading {
+    overflow: hidden;
+}
+
+/* ============================================
+   PRELOADER
+   ============================================ */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--mod-navy), var(--cs-bg-primary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.preloader-content {
+    text-align: center;
+}
+
+.preloader-icon {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.preloader-icon i {
+    font-size: 3rem;
+    animation: preloaderBounce 1s ease-in-out infinite;
+}
+
+.preloader-icon .rock-load {
+    color: var(--mod-red);
+    animation-delay: 0s;
+}
+
+.preloader-icon .game-load {
+    color: var(--cs-accent);
+    animation-delay: 0.5s;
+}
+
+@keyframes preloaderBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.preloader-text {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--mod-white);
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    margin-bottom: 1.5rem;
+}
+
+.preloader-bar {
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.preloader-progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--mod-red), var(--cs-accent));
+    border-radius: var(--radius-full);
+    animation: preloaderProgress 2s ease forwards;
+}
+
+@keyframes preloaderProgress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+/* ============================================
+   CUSTOM CURSOR
+   ============================================ */
+.cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(135deg, var(--mod-red), var(--cs-accent));
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease;
+}
+
+.cursor-dot.active {
+    width: 12px;
+    height: 12px;
+}
+
+.cursor-outline {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+}
+
+.cursor-outline.hover {
+    width: 60px;
+    height: 60px;
+    border-color: var(--mod-red);
+}
+
+.cursor-outline.hover-game {
+    border-color: var(--cs-accent);
+}
+
+/* Hide custom cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .cursor-dot,
+    .cursor-outline {
+        display: none;
+    }
+    
+    body {
+        cursor: auto;
+    }
+}
+
+/* ============================================
+   SCROLL PROGRESS BAR
+   ============================================ */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--mod-red), var(--cs-accent));
+    z-index: 1001;
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+/* ============================================
+   NAVIGATION - Enhanced
+   ============================================ */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: linear-gradient(90deg, 
+        rgba(13, 27, 42, 0.95) 0%, 
+        rgba(13, 27, 42, 0.95) 50%, 
+        rgba(17, 17, 17, 0.95) 50%, 
+        rgba(17, 17, 17, 0.95) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 2px solid;
+    border-image: linear-gradient(90deg, var(--mod-red) 50%, var(--cs-accent) 50%) 1;
+    transition: var(--transition-smooth);
+}
+
+nav.scrolled {
+    padding: 0.75rem 5%;
+    background: linear-gradient(90deg, 
+        rgba(13, 27, 42, 0.98) 0%, 
+        rgba(13, 27, 42, 0.98) 50%, 
+        rgba(17, 17, 17, 0.98) 50%, 
+        rgba(17, 17, 17, 0.98) 100%
+    );
+    box-shadow: var(--shadow-elevation-2);
+}
+
+.logo {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+    display: flex;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.logo-rock {
+    color: var(--mod-red);
+}
+
+.logo-game {
+    color: var(--cs-accent);
+}
+
+.logo::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--mod-red), var(--cs-accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover::after {
+    transform: scaleX(1);
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 0;
+}
+
+.hamburger-line {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--mod-red), var(--cs-accent));
+    border-radius: var(--radius-full);
+    transition: var(--transition-smooth);
+    transform-origin: center;
+}
+
+.hamburger.active .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+.nav-links {
+    display: flex;
+    gap: 0.5rem;
+    list-style: none;
+    transition: var(--transition-smooth);
+}
+
+.nav-links a {
+    display: block;
+    padding: 0.6rem 1.5rem;
+    color: var(--mod-white);
+    font-family: var(--font-display);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    border: 2px solid transparent;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-links a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.nav-links a:hover::before {
+    left: 100%;
+}
+
+.nav-links a:hover {
+    transform: translateY(-2px);
+}
+
+.nav-links a.active {
+    border-color: var(--mod-white);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Rock-themed nav links */
+.nav-links a.rock-link {
+    border-color: var(--mod-red);
+}
+
+.nav-links a.rock-link:hover {
+    background: var(--mod-red);
+    color: var(--mod-white);
+    box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+}
+
+/* Gaming-themed nav links */
+.nav-links a.game-link {
+    border-color: var(--cs-accent);
+    font-family: var(--font-mono);
+}
+
+.nav-links a.game-link:hover {
+    background: var(--cs-accent);
+    color: var(--cs-bg-primary);
+    box-shadow: 0 4px 15px var(--cs-accent-glow);
+}
+
+/* ============================================
+   HERO SECTION - Enhanced
+   ============================================ */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 5% 80px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(90deg, 
+        var(--mod-navy) 0%, 
+        var(--mod-navy) 50%, 
+        var(--cs-bg-primary) 50%, 
+        var(--cs-bg-primary) 100%
+    );
+}
+
+/* Particle Container */
+.hero-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: particleFloat linear infinite;
+    opacity: 0.6;
+}
+
+.particle.rock-particle {
+    background: var(--mod-red);
+    box-shadow: 0 0 10px var(--mod-red);
+}
+
+.particle.game-particle {
+    background: var(--cs-accent);
+    box-shadow: 0 0 10px var(--cs-accent);
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* MOD Target/Bullseye Background (Left Side) */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background: 
+        radial-gradient(circle, 
+            var(--mod-red) 0%, var(--mod-red) 15%, 
+            var(--mod-white) 15%, var(--mod-white) 30%,
+            var(--mod-red) 30%, var(--mod-red) 45%,
+            transparent 45%
+        );
+    opacity: 0.08;
+    animation: targetPulse 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* CS2 Glow Background (Right Side) */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 25%;
+    transform: translate(50%, -50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(ellipse, var(--cs-accent-glow) 0%, transparent 70%);
+    opacity: 0.3;
+    animation: csGlow 4s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes targetPulse {
+    0%, 100% { 
+        transform: translate(-50%, -50%) scale(1) rotate(0deg); 
+        opacity: 0.08; 
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.1) rotate(10deg); 
+        opacity: 0.12; 
+    }
+}
+
+@keyframes csGlow {
+    0% { opacity: 0.2; transform: translate(50%, -50%) scale(1); }
+    100% { opacity: 0.4; transform: translate(50%, -50%) scale(1.1); }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+}
+
+.hero-title {
+    margin-bottom: 2rem;
+}
+
+.title-line {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--mod-cream);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.title-line.title-highlight {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    color: var(--mod-white);
+    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+    animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.typewriter {
+    display: inline;
+    background: linear-gradient(90deg, var(--mod-red), var(--cs-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.typewriter-cursor {
+    color: var(--cs-accent);
+    font-weight: 300;
+    animation: cursorBlink 1s step-end infinite;
+}
+
+@keyframes cursorBlink {
+    50% { opacity: 0; }
+}
+
+.hero-description {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: var(--mod-cream);
+    font-family: var(--font-body);
+    font-style: italic;
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+    opacity: 0.9;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.5s forwards;
+}
+
+.hero-description strong {
+    color: var(--mod-white);
+    font-weight: 600;
+}
+
+.highlight-rock {
+    color: var(--mod-red);
+    font-weight: 600;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.7s forwards;
+}
+
+.cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.cta-btn:hover::before {
+    left: 100%;
+}
+
+.cta-primary {
+    background: linear-gradient(135deg, var(--mod-red), var(--mod-red-dark));
+    color: var(--mod-white);
+    border: none;
+}
+
+.cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(230, 57, 70, 0.4);
+}
+
+.cta-primary i {
+    animation: bounceDown 2s ease-in-out infinite;
+}
+
+@keyframes bounceDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
+
+.cta-secondary {
+    background: transparent;
+    color: var(--mod-white);
+    border: 2px solid var(--mod-white);
+}
+
+.cta-secondary:hover {
+    background: var(--mod-white);
+    color: var(--mod-navy);
+    transform: translateY(-3px);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 1s forwards;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.scroll-indicator:hover {
+    transform: translateX(-50%) translateY(-5px);
+}
+
+.scroll-indicator span {
+    font-size: 0.75rem;
+    color: var(--mod-grey);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+
+.mouse {
+    width: 26px;
+    height: 40px;
+    border: 2px solid var(--mod-grey);
+    border-radius: 13px;
+    position: relative;
+}
+
+.wheel {
+    width: 4px;
+    height: 8px;
+    background: var(--mod-grey);
+    border-radius: 2px;
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scrollWheel 2s ease-in-out infinite;
+}
+
+@keyframes scrollWheel {
+    0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(15px); }
+}
+
+/* ============================================
+   HOBBIES SECTION - Enhanced
+   ============================================ */
+.hobbies-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    background: linear-gradient(90deg, 
+        var(--mod-navy) 0%, 
+        var(--mod-navy) 50%, 
+        var(--cs-bg-primary) 50%, 
+        var(--cs-bg-primary) 100%
+    );
+    padding-top: 80px;
+}
+
+.section-header {
+    width: 100%;
+    text-align: center;
+    padding: 0 5% 3rem;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--mod-white);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--mod-red), var(--cs-accent));
+}
+
+.section-subtitle {
+    font-family: var(--font-body);
+    font-style: italic;
+    color: var(--mod-grey);
+    font-size: 1.1rem;
+}
+
+/* Center Divider Line */
+.hobbies-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--mod-red), var(--cs-accent));
+    z-index: 10;
+}
+
+.hobby-card {
+    width: 50%;
+    min-height: 600px;
+    padding: 4rem 5%;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.card-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.rock-glow {
+    background: radial-gradient(circle, rgba(230, 57, 70, 0.3) 0%, transparent 70%);
+}
+
+.gaming-glow {
+    background: radial-gradient(circle, rgba(222, 155, 53, 0.3) 0%, transparent 70%);
+}
+
+.hobby-card:hover .card-glow {
+    opacity: 1;
+}
+
+.card-content {
+    position: relative;
+    z-index: 2;
+    transition: var(--transition-smooth);
+}
+
+/* ============================================
+   ROCK CARD - British MOD Style Enhanced
+   ============================================ */
+.hobby-card.rock {
+    background: var(--mod-navy);
+    font-family: var(--font-body);
+}
+
+/* MOD Grid Pattern Overlay */
+.hobby-card.rock::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 50px,
+            rgba(230, 57, 70, 0.03) 50px,
+            rgba(230, 57, 70, 0.03) 51px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 50px,
+            rgba(230, 57, 70, 0.03) 50px,
+            rgba(230, 57, 70, 0.03) 51px
+        );
+    pointer-events: none;
+}
+
+/* Corner decoration */
+.hobby-card.rock::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    background: var(--mod-gold);
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+    opacity: 0.8;
+    transition: var(--transition-smooth);
+}
+
+.hobby-card.rock:hover::after {
+    width: 100px;
+    height: 100px;
+}
+
+/* Vinyl Record Icon */
+.hobby-card.rock .hobby-icon {
+    width: 140px;
+    height: 140px;
+    margin-bottom: 2rem;
+    border-radius: 50%;
+    border: 6px solid var(--mod-red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: var(--mod-black);
+    transition: var(--transition-smooth);
+}
+
+.hobby-card.rock .hobby-icon .icon-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px dashed var(--mod-red);
+    opacity: 0;
+    animation: none;
+    transition: var(--transition-smooth);
+}
+
+.hobby-card.rock:hover .hobby-icon .icon-ring {
+    opacity: 0.5;
+    animation: spinRing 10s linear infinite;
+}
+
+@keyframes spinRing {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Vinyl center hole */
+.hobby-card.rock .hobby-icon::before {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background: var(--mod-red);
+    border-radius: 50%;
+    border: 3px solid var(--mod-white);
+    z-index: 2;
+}
+
+/* Vinyl grooves */
+.hobby-card.rock .hobby-icon::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: repeating-radial-gradient(
+        circle at center,
+        transparent 0px,
+        transparent 8px,
+        rgba(230, 57, 70, 0.2) 8px,
+        rgba(230, 57, 70, 0.2) 10px
+    );
+}
+
+.hobby-card.rock .hobby-icon i {
+    font-size: 3rem;
+    color: var(--mod-red);
+    z-index: 1;
+    transition: var(--transition-smooth);
+}
+
+/* Rock Card Hover Effects */
+.hobby-card.rock:hover {
+    transform: translateY(-10px);
+}
+
+.hobby-card.rock:hover .hobby-icon {
+    transform: rotate(360deg);
+    box-shadow: 0 0 50px rgba(230, 57, 70, 0.5);
+}
+
+.hobby-card.rock:hover .hobby-icon i {
+    color: var(--mod-gold);
+    transform: scale(1.1);
+}
+
+.hobby-card.rock h2 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--mod-white);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: relative;
+}
+
+.hobby-card.rock h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 4px;
+    background: var(--mod-red);
+    transition: width 0.3s ease;
+}
+
+.hobby-card.rock:hover h2::after {
+    width: 80%;
+}
+
+.hobby-card.rock p {
+    color: var(--mod-cream);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    max-width: 400px;
+    position: relative;
+    z-index: 1;
+    opacity: 0.85;
+}
+
+/* Card Stats */
+.card-stats {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.hobby-card.rock .stat {
+    color: var(--mod-cream);
+}
+
+.hobby-card.rock .stat i {
+    color: var(--mod-red);
+}
+
+.hobby-card.rock .hobby-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: var(--mod-red);
+    color: var(--mod-white);
+    border: 3px solid var(--mod-white);
+    transition: var(--transition-smooth);
+    position: relative;
+    z-index: 1;
+}
+
+.hobby-card.rock .hobby-btn i {
+    transition: transform 0.3s ease;
+}
+
+.hobby-card.rock:hover .hobby-btn {
+    background: var(--mod-white);
+    color: var(--mod-red);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(230, 57, 70, 0.4);
+}
+
+.hobby-card.rock:hover .hobby-btn i {
+    transform: translateX(5px);
+}
+
+/* Vinyl Record Decoration */
+.card-decoration {
+    position: absolute;
+    pointer-events: none;
+}
+
+.hobby-card.rock .card-decoration {
+    bottom: 20px;
+    right: 20px;
+    opacity: 0.15;
+}
+
+.vinyl-record {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: repeating-radial-gradient(
+        circle at center,
+        var(--mod-black) 0px,
+        var(--mod-black) 5px,
+        var(--mod-red) 5px,
+        var(--mod-red) 7px
+    );
+    animation: spinVinyl 8s linear infinite;
+    border: 3px solid var(--mod-white);
+}
+
+@keyframes spinVinyl {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.vinyl-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    background: var(--mod-gold);
+    border-radius: 50%;
+}
+
+/* ============================================
+   GAMING CARD - CS2 Style Enhanced
+   ============================================ */
+.hobby-card.gaming {
+    background: var(--cs-bg-primary);
+    font-family: var(--font-main);
+}
+
+/* CS2 Scanline + Glow Overlay */
+.hobby-card.gaming::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(ellipse at top right, rgba(222, 155, 53, 0.05) 0%, transparent 50%),
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.1) 2px,
+            rgba(0, 0, 0, 0.1) 4px
+        );
+    pointer-events: none;
+}
+
+/* Tech Icon Container */
+.hobby-card.gaming .hobby-icon {
+    width: 140px;
+    height: 140px;
+    margin-bottom: 2rem;
+    background: var(--cs-bg-card);
+    border: 2px solid var(--cs-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: var(--transition-normal);
+    clip-path: polygon(10% 0, 90% 0, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0 90%, 0 10%);
+}
+
+.hobby-card.gaming .hobby-icon .icon-ring {
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    border: 2px solid var(--cs-accent);
+    opacity: 0;
+    transition: var(--transition-smooth);
+    clip-path: polygon(10% 0, 90% 0, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0 90%, 0 10%);
+}
+
+.hobby-card.gaming:hover .hobby-icon .icon-ring {
+    opacity: 0.3;
+    animation: pulseRing 2s ease infinite;
+}
+
+@keyframes pulseRing {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.1); opacity: 0.1; }
+}
+
+/* Top accent bar */
+.hobby-card.gaming .hobby-icon::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--cs-accent), var(--cs-accent-secondary));
+}
+
+.hobby-card.gaming .hobby-icon i {
+    font-size: 3rem;
+    color: var(--cs-accent);
+    z-index: 1;
+    transition: var(--transition-fast);
+}
+
+/* Gaming Card Hover Effects */
+.hobby-card.gaming:hover {
+    transform: translateY(-10px);
+}
+
+.hobby-card.gaming:hover .hobby-icon {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 20px 50px var(--cs-accent-glow);
+    background: var(--cs-bg-hover);
+}
+
+.hobby-card.gaming:hover .hobby-icon i {
+    color: var(--cs-accent-secondary);
+    text-shadow: 0 0 30px var(--cs-accent-glow);
+}
+
+.hobby-card.gaming h2 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--cs-text-primary);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    position: relative;
+}
+
+.cursor-blink {
+    color: var(--cs-accent);
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.hobby-card.gaming p {
+    color: var(--cs-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    max-width: 400px;
+    position: relative;
+    z-index: 1;
+}
+
+.hobby-card.gaming .stat {
+    color: var(--cs-text-secondary);
+}
+
+.hobby-card.gaming .stat i {
+    color: var(--cs-accent);
+}
+
+.hobby-card.gaming .hobby-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: transparent;
+    color: var(--cs-accent);
+    border: 2px solid var(--cs-accent);
+    transition: var(--transition-fast);
+    position: relative;
+    z-index: 1;
+}
+
+.hobby-card.gaming .hobby-btn i {
+    transition: transform 0.3s ease;
+}
+
+.hobby-card.gaming:hover .hobby-btn {
+    background: var(--cs-accent);
+    color: var(--cs-bg-primary);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px var(--cs-accent-glow);
+}
+
+.hobby-card.gaming:hover .hobby-btn i {
+    transform: translateX(5px);
+}
+
+/* Controller Decoration */
+.hobby-card.gaming .card-decoration {
+    bottom: 20px;
+    left: 20px;
+    opacity: 0.15;
+}
+
+.controller-graphic {
+    width: 80px;
+    height: 50px;
+    background: var(--cs-bg-card);
+    border: 2px solid var(--cs-accent);
+    border-radius: 25px;
+    position: relative;
+}
+
+.controller-led {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    background: var(--cs-accent);
+    border-radius: 50%;
+    animation: ledBlink 2s ease infinite;
+}
+
+@keyframes ledBlink {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; box-shadow: 0 0 15px var(--cs-accent); }
+}
+
+/* ============================================
+   FEATURES SECTION - Enhanced
+   ============================================ */
+.features {
+    padding: var(--space-xxl) 5%;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(90deg, 
+        var(--mod-blue) 0%, 
+        var(--mod-blue) 50%, 
+        var(--cs-bg-secondary) 50%, 
+        var(--cs-bg-secondary) 100%
+    );
+    border-top: 6px solid;
+    border-image: linear-gradient(90deg, var(--mod-red) 50%, var(--cs-accent) 50%) 1;
+    border-bottom: 6px solid;
+    overflow: hidden;
+}
+
+.features-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.floating-icons {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.floating-icon {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.1;
+    animation: floatIcon 20s linear infinite;
+}
+
+@keyframes floatIcon {
+    0% { transform: translateY(100%) rotate(0deg); }
+    100% { transform: translateY(-100%) rotate(360deg); }
+}
+
+/* Center Divider */
+.features::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--mod-red), var(--cs-accent));
+    z-index: 10;
+}
+
+.features-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: var(--mod-white);
+    margin-bottom: 3rem;
+    position: relative;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.title-decoration {
+    color: var(--mod-gold);
+    margin: 0 0.5rem;
+}
+
+.features-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--mod-red), var(--cs-accent));
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-item {
+    padding: 3rem 2rem;
+    text-align: left;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Rock Feature */
+.feature-item.rock-feature {
+    background: rgba(29, 53, 87, 0.8);
+    border: 3px solid var(--mod-white);
+    border-left: 6px solid var(--mod-red);
+    margin: 1rem;
+}
+
+.feature-item.rock-feature:hover {
+    transform: translateY(-5px) rotate(-1deg);
+    box-shadow: var(--shadow-mod);
+}
+
+.feature-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    transition: var(--transition-smooth);
+}
+
+.feature-item.rock-feature .feature-icon-wrapper {
+    background: var(--mod-red);
+    border-radius: 50%;
+}
+
+.feature-item.rock-feature .feature-icon-wrapper i {
+    font-size: 2rem;
+    color: var(--mod-white);
+}
+
+.feature-item.rock-feature:hover .feature-icon-wrapper {
+    transform: rotate(360deg);
+}
+
+.feature-item.rock-feature h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--mod-white);
+}
+
+.feature-item.rock-feature p {
+    color: var(--mod-grey);
+    font-family: var(--font-body);
+    font-style: italic;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+/* Game Feature */
+.feature-item.game-feature {
+    background: var(--cs-bg-card);
+    border: 1px solid var(--cs-border);
+    border-left: 4px solid var(--cs-accent);
+    margin: 1rem;
+}
+
+.feature-item.game-feature:hover {
+    transform: translateY(-5px);
+    border-color: var(--cs-accent);
+    box-shadow: var(--shadow-cs-lg), var(--shadow-cs-glow);
+}
+
+.feature-item.game-feature .feature-icon-wrapper {
+    background: var(--cs-bg-tertiary);
+    border: 2px solid var(--cs-accent);
+    clip-path: polygon(10% 0, 90% 0, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0 90%, 0 10%);
+}
+
+.feature-item.game-feature .feature-icon-wrapper i {
+    font-size: 2rem;
+    color: var(--cs-accent);
+}
+
+.feature-item.game-feature:hover .feature-icon-wrapper {
+    box-shadow: 0 0 20px var(--cs-accent-glow);
+}
+
+.feature-item.game-feature h3 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--cs-text-primary);
+}
+
+.terminal-cursor {
+    color: var(--cs-accent);
+    animation: blink 1s step-end infinite;
+}
+
+.feature-item.game-feature p {
+    color: var(--cs-text-muted);
+    font-family: var(--font-main);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+/* Feature List */
+.feature-list {
+    list-style: none;
+    margin-bottom: 1.5rem;
+}
+
+.feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+}
+
+.feature-item.rock-feature .feature-list li {
+    color: var(--mod-cream);
+}
+
+.feature-item.rock-feature .feature-list i {
+    color: var(--mod-gold);
+}
+
+.feature-item.game-feature .feature-list li {
+    color: var(--cs-text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+}
+
+.feature-item.game-feature .feature-list i {
+    color: var(--cs-accent);
+}
+
+/* Progress Bar */
+.feature-progress {
+    margin-top: 1rem;
+}
+
+.feature-progress span {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+}
+
+.feature-item.rock-feature .feature-progress span {
+    color: var(--mod-grey);
+}
+
+.feature-item.game-feature .feature-progress span {
+    color: var(--cs-text-muted);
+    font-family: var(--font-mono);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: var(--radius-full);
+    transition: width 1.5s ease;
+}
+
+.rock-progress {
+    background: linear-gradient(90deg, var(--mod-red), var(--mod-gold));
+}
+
+.game-progress {
+    background: linear-gradient(90deg, var(--cs-accent), var(--cs-accent-secondary));
+}
+
+/* ============================================
+   QUOTE SECTION
+   ============================================ */
+.quote-section {
+    padding: var(--space-xxl) 5%;
+    background: linear-gradient(90deg, 
+        var(--mod-navy) 0%, 
+        var(--mod-navy) 50%, 
+        var(--cs-bg-primary) 50%, 
+        var(--cs-bg-primary) 100%
+    );
+    text-align: center;
+}
+
+.quote-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.quote-nav {
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid var(--mod-grey);
+    border-radius: 50%;
+    color: var(--mod-grey);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quote-nav:hover {
+    border-color: var(--mod-red);
+    color: var(--mod-red);
+    transform: scale(1.1);
+}
+
+.quote-content {
+    flex: 1;
+    padding: 2rem;
+}
+
+.quote-icon {
+    font-size: 3rem;
+    color: var(--mod-red);
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.quote-text {
+    font-family: var(--font-body);
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--mod-cream);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    transition: opacity 0.3s ease;
+}
+
+.quote-author {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--cs-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+
+.quote-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.quote-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--mod-grey);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.quote-dot.active {
+    background: linear-gradient(135deg, var(--mod-red), var(--cs-accent));
+    transform: scale(1.3);
+}
+
+.quote-dot:hover {
+    transform: scale(1.2);
+}
+
+/* ============================================
+   FOOTER - Enhanced
+   ============================================ */
+footer {
+    padding: 5rem 5% 2rem;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(90deg, 
+        var(--mod-navy) 0%, 
+        var(--mod-navy) 50%, 
+        var(--cs-bg-secondary) 50%, 
+        var(--cs-bg-secondary) 100%
+    );
+    border-top: 4px solid;
+    border-image: linear-gradient(90deg, var(--mod-red) 50%, var(--cs-accent) 50%) 1;
+}
+
+.footer-content {
+    margin-bottom: 2rem;
+}
+
+.footer-logo {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.footer-tagline {
+    font-family: var(--font-body);
+    font-style: italic;
+    color: var(--mod-grey);
+    font-size: 1rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+    background: transparent;
+    border: 2px solid var(--mod-grey);
+    border-radius: 50%;
+    color: var(--mod-grey);
+    transition: var(--transition-smooth);
+    position: relative;
+}
+
+.social-link::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 1rem;
+    background: var(--mod-white);
+    color: var(--mod-navy);
+    font-size: 0.75rem;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: var(--radius-sm);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-fast);
+    white-space: nowrap;
+    margin-bottom: 0.5rem;
+}
+
+.social-link:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+.social-link:hover {
+    transform: translateY(-5px);
+}
+
+/* Different colors on hover */
+.social-link:nth-child(1):hover {
+    border-color: #1DA1F2;
+    color: #1DA1F2;
+    box-shadow: 0 0 20px rgba(29, 161, 242, 0.3);
+}
+
+.social-link:nth-child(2):hover {
+    border-color: #FF0000;
+    color: #FF0000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+}
+
+.social-link:nth-child(3):hover {
+    border-color: #5865F2;
+    color: #5865F2;
+    box-shadow: 0 0 20px rgba(88, 101, 242, 0.3);
+}
+
+.social-link:nth-child(4):hover {
+    border-color: #1DB954;
+    color: #1DB954;
+    box-shadow: 0 0 20px rgba(29, 185, 84, 0.3);
+}
+
+.copyright {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--mod-grey);
+    margin-bottom: 0.5rem;
+}
+
+.made-with {
+    font-size: 0.85rem;
+    color: var(--mod-grey);
+}
+
+.made-with .pulse {
+    color: var(--mod-red);
+    animation: heartPulse 1s ease infinite;
+}
+
+@keyframes heartPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* ============================================
+   BACK TO TOP BUTTON
+   ============================================ */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--mod-red), var(--cs-accent));
+    border: none;
+    border-radius: 50%;
+    color: var(--mod-white);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: var(--transition-smooth);
+    z-index: 999;
+    box-shadow: var(--shadow-elevation-2);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(230, 57, 70, 0.4);
+}
+
+.progress-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.3);
+    stroke-width: 3;
+    stroke-dasharray: 138.2;
+    stroke-dashoffset: 138.2;
+    transition: stroke-dashoffset 0.1s linear;
+}
+
+/* ============================================
+   TOAST NOTIFICATIONS
+   ============================================ */
+.toast-container {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.toast {
+    padding: 1rem 1.5rem;
+    background: var(--cs-bg-card);
+    border-left: 4px solid var(--cs-accent);
+    border-radius: var(--radius-sm);
+    color: var(--mod-white);
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    box-shadow: var(--shadow-elevation-3);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    animation: slideInRight 0.3s ease;
+    max-width: 350px;
+}
+
+.toast.success {
+    border-left-color: #4CAF50;
+}
+
+.toast.error {
+    border-left-color: var(--mod-red);
+}
+
+.toast.info {
+    border-left-color: #2196F3;
+}
+
+.toast i {
+    font-size: 1.2rem;
+}
+
+.toast.success i { color: #4CAF50; }
+.toast.error i { color: var(--mod-red); }
+.toast.info i { color: #2196F3; }
+
+.toast-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--mod-grey);
+    cursor: pointer;
+    padding: 0;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+}
+
+.toast-close:hover {
+    color: var(--mod-white);
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 1024px) {
+    .hobby-card {
+        min-height: 550px;
+    }
+}
+
+@media (max-width: 900px) {
+    .hamburger {
+        display: flex;
+    }
+    
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 300px;
+        height: 100vh;
+        background: linear-gradient(180deg, var(--mod-navy), var(--cs-bg-primary));
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5rem;
+        transition: right 0.4s ease;
+        z-index: 1000;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+    }
+    
+    .nav-links.active {
+        right: 0;
+    }
+    
+    .nav-links a {
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+    }
+    
+    .hobby-card {
+        width: 100%;
+    }
+    
+    .hobbies-container::before {
+        display: none;
+    }
+    
+    .hobby-card.rock {
+        border-bottom: 4px solid var(--mod-red);
+    }
+    
+    .hobby-card.gaming {
+        border-top: 4px solid var(--cs-accent);
+    }
+    
+    .features::before {
+        display: none;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .features {
+        background: var(--mod-blue);
+    }
+    
+    .feature-item.game-feature {
+        background: rgba(20, 20, 20, 0.95);
+    }
+    
+    footer,
+    .quote-section,
+    body,
+    .hobbies-container,
+    .hero {
+        background: var(--mod-navy);
+    }
+    
+    .quote-container {
+        flex-direction: column;
+    }
+    
+    .quote-nav {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        padding: 1rem 5%;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+    }
+    
+    .hero {
+        padding: 100px 5% 60px;
+    }
+    
+    .hero::before,
+    .hero::after {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .hobby-card {
+        min-height: 500px;
+        padding: 3rem 5%;
+    }
+    
+    .hobby-card .hobby-icon {
+        width: 110px !important;
+        height: 110px !important;
+    }
+    
+    .hobby-card .hobby-icon i {
+        font-size: 2.5rem !important;
+    }
+    
+    .hobby-card h2 {
+        font-size: 2rem !important;
+    }
+    
+    .card-stats {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .features {
+        padding: var(--space-xl) 5%;
+    }
+    
+    .quote-text {
+        font-size: 1.2rem;
+    }
+    
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+    
+    .toast-container {
+        right: 15px;
+        left: 15px;
+        bottom: 80px;
+    }
+    
+    .toast {
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-links {
+        width: 100%;
+    }
+    
+    .hobby-card .hobby-icon {
+        width: 90px !important;
+        height: 90px !important;
+    }
+    
+    .hobby-card .hobby-icon i {
+        font-size: 2rem !important;
+    }
+    
+    .hobby-card h2 {
+        font-size: 1.6rem !important;
+    }
+    
+    .hobby-card.rock::after {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .hobby-btn {
+        padding: 0.75rem 1.5rem !important;
+        font-size: 0.8rem !important;
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cta-btn {
+        width: 100%;
+        max-width: 250px;
+        justify-content: center;
+    }
+    
+    .social-links {
+        gap: 0.75rem;
+    }
+    
+    .social-link {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY - REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    html {
+        scroll-behavior: auto;
+    }
+    
+    .particle {
+        display: none;
+    }
+    
+    .preloader {
+        display: none;
+    }
+}
+
+/* ============================================
+   HIGH CONTRAST MODE
+   ============================================ */
+@media (prefers-contrast: high) {
+    :root {
+        --mod-red: #FF0000;
+        --cs-accent: #FFB000;
+        --mod-white: #FFFFFF;
+        --cs-text-primary: #FFFFFF;
+    }
+    
+    a:focus, button:focus {
+        outline: 4px solid #FFFFFF;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    nav,
+    .hobby-icon,
+    .social-links,
+    footer::before,
+    footer::after,
+    .preloader,
+    .cursor-dot,
+    .cursor-outline,
+    .scroll-progress,
+    .back-to-top,
+    .particle,
+    .hero-particles {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+        cursor: auto !important;
+    }
+    
+    .hobby-card,
+    .feature-item {
+        border: 1px solid #000 !important;
+        page-break-inside: avoid;
+    }
+}
